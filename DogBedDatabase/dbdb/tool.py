@@ -1,4 +1,17 @@
-# dbdb/tool.py
+import sys
+import dbdb
+
+OK = 0
+BAD_ARGS = 1
+BAD_VERB = 2
+BAD_KEY = 3
+
+def usage():
+    print("Usage:", file=sys.stderr)
+    print("\tpython -m dbdb.tool DBNAME get KEY", file=sys.stderr)
+    print("\tpython -m dbdb.tool DBNAME set KEY VALUE", file=sys.stderr)
+    print("\tpython -m dbdb.tool DBNAME delete KEY", file=sys.stderr)
+
 def main(argv):
     if not (4 <= len(argv) <= 5):
         usage()
@@ -10,7 +23,7 @@ def main(argv):
     db = dbdb.connect(dbname)          # CONNECT
     try:
         if verb == 'get':
-            sys.stdout.write(db[key])  # GET VALUE
+            print(db[key])  # GET VALUE
         elif verb == 'set':
             db[key] = value
             db.commit()
@@ -21,3 +34,6 @@ def main(argv):
         print("Key not found", file=sys.stderr)
         return BAD_KEY
     return OK
+
+if __name__ == '__main__':
+    sys.exit(main(sys.argv))

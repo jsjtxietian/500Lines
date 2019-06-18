@@ -1,4 +1,7 @@
 import os
+from dbdb.interface import DBDB
+
+__all__ = ['DBDB','connect']
 
 
 # dbdb/__init__.py
